@@ -19,12 +19,6 @@
     <!-- Site core CSS -->
     <link href="assets/css/main.css?<?=COMMIT_HASH?>" rel="stylesheet">
 
-    <!------ Moved from posts_index.php file  ---------->
-    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
-    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-    <!------ Include the above in your HEAD tag ---------->
-
     <style>
         body {
             padding-top: 70px;
@@ -59,7 +53,9 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li <?= $controller == 'posts' ? 'class="active"' : '' ?>><a href="#">Home</a></li>
+                <li <?= $controller == 'posts' ? 'class="active"' : '' ?>><a href="<?=BASE_URL?>">Posts</a></li>
+                <li <?= $controller == 'tags' ? 'class="active"' : '' ?>><a href="<?= BASE_URL?>tags">Tags</a></li>
+                <li <?= $controller == 'users' ? 'class="active"' : '' ?>><a href="<?= BASE_URL?>users">Users</a></li>
                 <li <?= $controller == 'halo' ? 'class="active"' : '' ?>><a href="halo">Halo admin</a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Sample dropdown <b class="caret"></b></a>
@@ -98,7 +94,7 @@
     <!-- Main component for a primary marketing message or call to action -->
     <?php if (!file_exists("views/$controller/{$controller}_$action.php")) error_out('The view <i>views/' . $controller . '/' . $controller . '_' . $action . '.php</i> does not exist. Create that file.'); ?>
     <?php @require "views/$controller/{$controller}_$action.php"; ?>
-    
+
 </div>
 <!-- /container -->
 
