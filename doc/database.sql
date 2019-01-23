@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 10, 2019 at 09:38 AM
+-- Generation Time: Jan 23, 2019 at 11:18 AM
 -- Server version: 5.6.41
 -- PHP Version: 7.2.7
 
@@ -39,6 +39,47 @@ CREATE TABLE `post` (
 INSERT INTO `post` (`post_id`, `post_subject`, `post_text`, `post_created`, `user_id`) VALUES
 (1, 'esimene postitus', 'The development of transistors in the late 1940s at Bell Laboratories allowed a new generation of computers to be designed with greatly reduced power consumption. The first commercially available stored-program computer, the Ferranti Mark I, contained 4050 valves and had a power consumption of 25 kilowatts. By comparison the first transistorised computer, developed at the University of Manchester and operational by November 1953, consumed only 150 watts in its final version.', '2019-01-10 06:48:11', 1),
 (2, 'esimene postitus', 'The development of transistors in the late 1940s at Bell Laboratories allowed a new generation of computers to be designed with greatly reduced power consumption. The first commercially available stored-program computer, the Ferranti Mark I, contained 4050 valves and had a power consumption of 25 kilowatts. By comparison the first transistorised computer, developed at the University of Manchester and operational by November 1953, consumed only 150 watts in its final version.', '2019-01-10 06:48:24', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `post_tags`
+--
+
+DROP TABLE IF EXISTS `post_tags`;
+CREATE TABLE `post_tags` (
+  `post_id` int(11) UNSIGNED NOT NULL,
+  `tag_id` int(11) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `post_tags`
+--
+
+INSERT INTO `post_tags` (`post_id`, `tag_id`) VALUES
+(1, 1),
+(2, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tag`
+--
+
+DROP TABLE IF EXISTS `tag`;
+CREATE TABLE `tag` (
+  `tag_id` int(10) UNSIGNED NOT NULL,
+  `tag_name` varchar(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tag`
+--
+
+INSERT INTO `tag` (`tag_id`, `tag_name`) VALUES
+(1, 'php'),
+(2, 'html'),
+(3, 'css');
 
 -- --------------------------------------------------------
 
@@ -87,7 +128,10 @@ INSERT INTO `translations` (`translation_id`, `phrase`, `language`, `translation
 (24, 'Oops...', 'en', '{untranslated}', 'global', 'global'),
 (25, 'Close', 'en', '{untranslated}', 'global', 'global'),
 (26, 'Server returned an error. Please try again later ', 'en', '{untranslated}', 'global', 'global'),
-(27, 'Action', 'en', '{untranslated}', 'global', 'global');
+(27, 'Action', 'en', '{untranslated}', 'global', 'global'),
+(28, 'Oops...', 'et', '{untranslated}', 'global', 'global'),
+(29, 'Close', 'et', '{untranslated}', 'global', 'global'),
+(30, 'Server returned an error. Please try again later ', 'et', '{untranslated}', 'global', 'global');
 
 -- --------------------------------------------------------
 
@@ -124,6 +168,19 @@ ALTER TABLE `post`
   ADD KEY `user_id` (`user_id`) USING BTREE;
 
 --
+-- Indexes for table `post_tags`
+--
+ALTER TABLE `post_tags`
+  ADD PRIMARY KEY (`post_id`,`tag_id`),
+  ADD KEY `tag_id` (`tag_id`);
+
+--
+-- Indexes for table `tag`
+--
+ALTER TABLE `tag`
+  ADD PRIMARY KEY (`tag_id`);
+
+--
 -- Indexes for table `translations`
 --
 ALTER TABLE `translations`
@@ -147,10 +204,16 @@ ALTER TABLE `post`
   MODIFY `post_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `tag`
+--
+ALTER TABLE `tag`
+  MODIFY `tag_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `translations`
 --
 ALTER TABLE `translations`
-  MODIFY `translation_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `translation_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -167,5 +230,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `post`
   ADD CONSTRAINT `post_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`);
+
+--
+-- Constraints for table `post_tags`
+--
+ALTER TABLE `post_tags`
+  ADD CONSTRAINT `post_tags_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `post` (`post_id`),
+  ADD CONSTRAINT `post_tags_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `tag` (`tag_id`);
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
